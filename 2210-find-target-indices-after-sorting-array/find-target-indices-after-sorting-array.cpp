@@ -1,12 +1,15 @@
 class Solution {
 public:
-    vector<int> targetIndices(vector<int>& nums, int t) {
-        vector<int> count(101,0),ans;
-        for(int x:nums) count[x]++;
-        for(int i=1;i<t;i++) count[i]+=count[i-1];
-        if(!t) return {};
-        ans.reserve(count[t]);
-        for(int i=0;i<count[t];i++) ans.push_back(count[t-1]+i);
+    vector<int> targetIndices(vector<int>& nums, int target) {
+        int less = 0, count = 0;
+        for (int x : nums) {
+            if (x < target) less++;
+            else if (x == target) count++;
+        }        
+        vector<int> ans(count);
+        for (int i = 0; i < count; i++) {
+            ans[i] = less + i;
+        }
         return ans;
     }
 };
