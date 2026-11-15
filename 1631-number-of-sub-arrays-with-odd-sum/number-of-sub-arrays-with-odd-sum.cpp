@@ -3,16 +3,17 @@ public:
     int numOfSubarrays(vector<int>& arr) {
         const int MOD = 1e9 + 7;
         long long ans = 0;
-        int prefixParity = 0, evenCount = 1, oddCount = 0;
+        int odd = 0, even = 0;
+
         for (int num : arr) {
-            prefixParity ^= (num & 1);
-            if (prefixParity == 1) {
-                ans = (ans + evenCount) % MOD;
-                oddCount++;
+            if (num & 1) {
+                int prevOdd = odd;
+                odd = even + 1;
+                even = prevOdd;
             } else {
-                ans = (ans + oddCount) % MOD;
-                evenCount++;
+                even = even + 1;
             }
+            ans = (ans + odd) % MOD;
         }
         return ans;
     }
